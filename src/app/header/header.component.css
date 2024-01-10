@@ -1,0 +1,16 @@
+a{
+    font-size: 18px;
+    margin:auto !important;
+
+
+}
+
+a:hover{
+    color: gold !important;
+    background-color: black;
+
+}
+
+li{
+    padding: 5px;
+}

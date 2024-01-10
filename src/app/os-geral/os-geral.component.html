@@ -1,0 +1,1236 @@
+<app-header></app-header>
+
+<div id="conteudo" class="bg-dark">
+    <div id="cabecalho-os">
+        <div style="float: left;">
+            <legend style="font-size: 18px !important;color: gold; font-weight: bold;">OS: <span
+                    style="color: white;">{{ordemServico.nrOrdemServico}}</span>
+            </legend>
+
+            <legend style="font-size: 18px !important;color: gold; font-weight: bold;">Entrada: <span
+                    style="color: white;">{{ordemServico.dataEntrada}}</span>
+            </legend>
+        </div>
+
+        <div style="float: right;">
+
+            <legend style="font-size: 18px !important;color: gold; font-weight: bold;"><span [style.color]="corStatus"
+                    style="color: white;">{{ordemServico.status}} <i class="bi bi-circle-fill" 
+                        style="font-size: 15px !important;float: right; margin-left: 0px!important; " ></i></span>
+            </legend>
+            <legend style="font-size: 18px !important;color: gold; font-weight: bold;"> Valor total: <span *ngIf=" ordemServico.valorTotal !=null" style="color:white">
+              {{ ordemServico.valorTotal | currency:'BRL':'symbol':'1.2-2'}}
+                </span>
+                <span *ngIf=" ordemServico.valorTotal == null" style="color:white">
+                     R$0.00
+                    </span>
+        </legend>
+
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs bg-dark text-white" id="myTab" role="tablist">
+        <li class="nav-item ">
+            <a class="nav-link active bg-dark text-white" id="geral-tab" data-toggle="tab" href="#geral" role="tab"
+                aria-controls="geral" aria-selected="true">Geral</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link bg-dark text-white" id="infoTec-tab" data-toggle="tab" href="#infTecnico" role="tab"
+                aria-controls="infTecnico" aria-selected="false">Técnicas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link bg-dark text-white" id="historico-tab" data-toggle="tab" href="#servico" role="tab"
+                aria-controls="servico" aria-selected="false">Serviços</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link bg-dark text-white" id="produto-tab" data-toggle="tab" href="#produto" role="tab"
+                aria-controls="produto" aria-selected="false">Produtos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link bg-dark text-white" id="historico-tab" data-toggle="tab" href="#historico" role="tab"
+                aria-controls="historico" aria-selected="false">Histórico</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link bg-dark text-white" id="valores-tab" data-toggle="tab" href="#valores" role="tab"
+                aria-controls="valores" aria-selected="false">Valores</a>
+        </li>
+    </ul>
+
+    <div class="tab-content bg-dark text-white" id="myTabContent">
+        <div class="tab-pane fade show active" id="geral" role="tabpanel" aria-labelledby="geral">
+
+            <div id="acoes" style="padding:2px; float:right; margin-bottom: 7px;">
+                <button type="button" class="btn btn-warning" data-target="#modalEditarOs" data-toggle="modal"
+                    style="margin-right: 15px;"> <i class="bi bi-pen"></i> Editar
+                </button>
+                <button type="button" class="btn btn-primary" data-target="#modalAtualizaStatus" data-toggle="modal"
+                    style="margin-right: 15px;"> <i class="bi bi-arrow-left-right"></i> Atualizar Status
+                </button>
+                <button type="button" class="btn btn-primary" data-target="#modalTransferir" data-toggle="modal"
+                    style="margin-right: 15px;"> <i class="bi bi-arrow-left-right"></i> Transferir
+                </button>
+                <button type="button" class="btn btn-danger" data-target="#modalConfirmaExc" data-toggle="modal" 
+                    style="margin-right: 15px;"> <i class="bi bi-trash"></i> Excluir
+                </button>
+            </div>
+
+
+
+            <table class="table table-hover table-dark" style="width: 100%; margin:auto;">
+                <tbody>
+                    <tr>
+                        <th scope="row">CLIENTE</th>
+                        <td>{{ordemServico.cliente.nome}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TELEFONE</th>
+                        <td>{{ordemServico.cliente.telefone}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">E-MAIL</th>
+                        <td>{{ordemServico.cliente.email}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">MARCA</th>
+                        <td>{{ordemServico.marca}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">MODELO</th>
+                        <td>{{ordemServico.modelo}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">COR</th>
+                        <td>{{ordemServico.cor}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">NÚMERO DE SÉRIE</th>
+                        <td>{{ordemServico.nrSerie}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">CATEGORIA</th>
+                        <td>{{ordemServico.categoria.nome}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ACESSÓRIOS</th>
+                        <td><span *ngFor="let item of ordemServico.acessorios;"> {{item.nome}}, </span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">DEFEITOS RELATADOS</th>
+                        <td> {{ordemServico.dsDefeitoCliente}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">DEFEITOS CONSTATADOS</th>
+                        <td> {{ordemServico.dsDefeitoTecnico}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ORÇAMENTO APROVADO</th>
+                        <td> <span *ngIf="ordemServico.orcamentoAprovado"> Sim</span> <span
+                                *ngIf="!ordemServico.orcamentoAprovado"> Não</span></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">OBSERVAÇÃO</th>
+                        <td> {{ordemServico.osbservacao }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TÉCNICO RESPONSÁVEL</th>
+                        <td> {{ordemServico.tecnicoResponsavel.nome }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+        <div class="tab-pane fade" id="infTecnico" role="tabpanel" aria-labelledby="infoTec-tab">
+            <div id="acoes" style="padding:2px; float:right; margin-bottom: 7px;">
+                <button type="button" class="btn btn-primary" data-target="#modalInfoTec" data-toggle="modal"> <i
+                        class="bi bi-cpu"></i> Adicionar Informações
+                </button>
+
+            </div>
+            <table class="table table-hover table-dark" style="width: 100%; margin:auto;">
+                <tbody>
+                    <tr>
+                        <th scope="row">POSSUÍ HD:</th>
+                        <td>
+                            <span *ngIf="ordemServico.infoTec.hardDisk"> Sim</span>
+                            <span *ngIf="!ordemServico.infoTec.hardDisk"> Não</span>
+                            <span *ngIf="!ordemServico.infoTec.hardDisk == null"> Não</span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">POSSUÍ SSD:</th>
+                        <td>
+                            <span *ngIf="ordemServico.infoTec.ssd"> Sim</span>
+                            <span *ngIf="!ordemServico.infoTec.ssd"> Não</span>
+                            <span *ngIf="!ordemServico.infoTec.ssd == null"> Não</span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TAMANHO DE ARMAZENAMENTO:</th>
+                        <td>{{ordemServico.infoTec.tamArmazanamento}} (MB)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">VELOCIDADE DE DISCO: </th>
+                        <td>{{ordemServico.infoTec.velocDiscPrincipal}} (RPM)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TIPO DE MEMÓRIA:</th>
+                        <td>{{ordemServico.infoTec.tpMemoriaRam}} (MB)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PROCESSADOR :</th>
+                        <td>{{ordemServico.infoTec.processador}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TEMPERATURA DO PROCESSADOR:</th>
+                        <td>{{ordemServico.infoTec.tempProcessador}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">SISTEMA OPERACIONAL:</th>
+                        <td>{{ordemServico.infoTec.sistemaOp}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PLACA DE VÍDEO:</th>
+                        <td>{{ordemServico.infoTec.placaVideo}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PLACA MÃE:</th>
+                        <td>{{ordemServico.infoTec.placaMae}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TAMANHO MONITOR:</th>
+                        <td>{{ordemServico.infoTec.tamMonitor}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TENSÃO DE ENTRADA:</th>
+                        <td>{{ordemServico.infoTec.voltEntrada}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+        <div class="tab-pane fade" id="historico" role="tabpanel" aria-labelledby="historico-tab">
+            <div id="acoes" style="padding:2px; float:right; margin-bottom: 7px;">
+                <button type="button" class="btn btn-primary" data-target="#modalAdicionaHistorico" data-toggle="modal">
+                    <i class="bi bi-file-earmark-plus"></i> Adicionar Histórico
+                </button>
+
+            </div>
+            <div class="card-body">
+
+                <span *ngFor="let item of historicos;">
+                    <div class="card-header bg-dark ">
+                        <legend style="color: gold;font-size: 16px"><strong>{{item.data}}</strong>
+                        </legend>
+                    </div>
+
+
+                    <table class="table table-hover table-dark" style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <th scope="row" style="font-size: 13px;">SITUAÇÃO:</th>
+                                <td style="text-align: left;">{{item.situacao.nome}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">INFORMAÇÃO:</th>
+                                <td style="text-align: left;">{{item.informacao}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                </span>
+            </div>
+
+
+        </div>
+        <div class="tab-pane fade" id="valores" role="tabpanel" aria-labelledby="valores-tab">
+            <div id="acoes" style="padding:2px; float:right; margin-bottom: 7px;">
+                <button type="button" class="btn btn-primary" data-target="#modalAdicionaDesconto" data-toggle="modal">
+                    <i class="bi bi-file-earmark-plus"></i> Adicionar Desconto
+                </button>
+
+            </div>
+            <div class="card-body">
+
+
+
+                <h3 scope="row">SERVIÇOS/PRODUTOS</h3>
+                <table class="table table-hover table-dark">
+
+                    <thead style="font-size: 25px;">
+                        <th>Nome</th>
+                        <th>Valor</th>
+                      
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let item of ordemServico.servicosEfetuados;index as i;">
+                            <td>{{item.nome}}</td>
+                           
+                            <td>{{ item.valor | currency:'BRL':'symbol':'1.2-2'}}</td>
+                  
+                        </tr>
+                        
+                        <tr *ngFor="let item of ordemServico.produtos index as i;">
+                            <td>{{item.nome}}</td>
+                           
+                            <td>{{ item.valor | currency:'BRL':'symbol':'1.2-2'}}</td>
+                  
+                        </tr>
+
+                        <tr style="color:gold">
+                            <td >DESCONTO</td>
+                           
+                            <td>{{ ordemServico.valorDesconto | currency:'BRL':'symbol':'1.2-2'}}</td>
+                  
+                        </tr>
+                        <tr style="color:gold">
+                            <td >VALOR ORÇAMENTO</td>
+                           
+                            <td>{{ ordemServico.valorOrcamento | currency:'BRL':'symbol':'1.2-2'}}</td>
+                  
+                        </tr>
+
+                    </tbody>
+                </table>
+                <hr>
+                
+                <h3 style="text-align:center;font-size: 25px;"> TOTAL GERAL: {{ordemServico.valorTotal | currency:'BRL':'symbol':'1.2-2'}}</h3>
+
+        
+
+
+
+
+                
+            </div>
+
+
+        </div>
+
+        <div class="tab-pane fade" id="servico" role="tabpanel" aria-labelledby="servico-tab">
+            <div id="acoes" style="padding:2px; float:right; margin-bottom: 7px;">
+                <button type="button" class="btn btn-primary" data-target="#modalAdicionaServico" data-toggle="modal" [routerLink]="['/servico-consultar']"
+                    (click)="consultaServicos()" style="margin-right: 15px;">
+                    <i class="bi bi-tools"></i> Cadastrar Serviço
+                </button>
+                <button type="button" class="btn btn-primary" data-target="#modalAdicionaServico" data-toggle="modal"
+                    (click)="consultaServicos()">
+                    <i class="bi bi-tools"></i> Adicionar Serviço para OS
+                </button>
+
+            </div>
+            <div class="card-body">
+
+
+                <h3 scope="row">SERVIÇOS EFETUADOS (MÃO DE OBRA)</h3>
+                <table class="table table-hover table-dark">
+
+                    <thead style="font-size: 25px;">
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let item of ordemServico.servicosEfetuados;index as i;">
+                            <td>{{item.nome}}</td>
+                            <td>{{item.descricao}}</td>
+                            <td>{{ item.valor | currency:'BRL':'symbol':'1.2-2'}}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger" (click)="removerServico(i)"
+                                    style="font-size: 20px;"><i class="bi bi-trash-fill"></i>
+
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <hr>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="produto" role="tabpanel" aria-labelledby="servico-tab">
+            <div id="acoes" style="padding:2px; float:right; margin-bottom: 7px;">
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                    (click)="consultaServicos()" style="margin-right: 15px;">
+                    <i class="bi bi-memory "></i> Cadastrar Produto
+                </button>
+                <button type="button" class="btn btn-primary" data-target="#modalAdicionaProduto" data-toggle="modal"
+                    (click)="consultarProdutos()">
+                    <i class="bi bi-tools"></i> Adicionar Produto para OS
+                </button>
+
+            </div>
+            <div class="card-body">
+
+
+                <h3 scope="row">Produtos de Upgrade/Reparo</h3>
+                <table class="table table-hover table-dark">
+
+                    <thead style="font-size: 25px;">
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let item of ordemServico.produtos;index as i;">
+                            <td>{{item.nome}}</td>
+                            <td>{{item.descricao}}</td>
+                            <td>{{ item.valor | currency:'BRL':'symbol':'1.2-2'}}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger" (click)="removerProduto(i)"
+                                    style="font-size: 20px;"><i class="bi bi-trash-fill"></i>
+
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal Informações Técnicas
+ -->
+<div class="modal fade" id="modalInfoTec" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="width: 80%;">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold">Informações
+                    Técnicas</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;">
+                <form style="width: 100%;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="form-group">
+
+                                    <legend class="btn-secondary" style="border-radius: 5px; text-align: center;"> <i
+                                            class="bi bi-hdd-fill"></i> Armazenamento</legend>
+                                    <label for="hardDisk" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Possuí Hard
+                                        Disk:</label>
+                                    <input type="text" class="form-control" name="hardDisk" style="display:none"
+                                        [(ngModel)]="ordemServico.infoTec.hardDisk">
+
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1" (click)="setHdTrue()">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Sim
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault2" (click)="setHdFalse()">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Não
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ssd" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Possuí SSD:</label>
+                                    <input type="text" class="form-control" name="ssd"
+                                        [(ngModel)]="ordemServico.infoTec.ssd" style="display:none">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault1"
+                                            id="flexRadioDefault3" (click)="setSsdTrue()">
+                                        <label class="form-check-label" for="flexRadioDefault3">
+                                            Sim
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault1"
+                                            id="flexRadioDefault4" (click)="setSsdFalse()">
+                                        <label class="form-check-label" for="flexRadioDefault4">
+                                            Não
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tamArmazanamento" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Tamanho
+                                        de
+                                        armazenamento:</label>
+                                    <input type="number" class="form-control" name="tamArmazanamento"
+                                        [(ngModel)]="ordemServico.infoTec.tamArmazanamento">
+                                </div>
+                                <div class="form-group">
+                                    <label for="velocDiscPrincipal" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Velocidade
+                                        do disco principal:</label>
+                                    <input type="number" class="form-control" name="velocDiscPrincipal"
+                                        [(ngModel)]="ordemServico.infoTec.velocDiscPrincipal">
+                                </div>
+
+
+                            </div>
+                            <div class="col-sm">
+                                <legend class="btn-secondary" style="border-radius: 5px; text-align: center;"> <i
+                                        class="bi bi-cpu-fill"></i> Memória e Processamento</legend>
+
+
+
+                                <div class="form-group">
+                                    <label for="tpMemoriaRam" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Tipo de
+                                        memória:
+                                    </label>
+
+                                    <select name="tpMemoriaRam" class="form-control" id="tpMemoriaRam"
+                                        [(ngModel)]="ordemServico.infoTec.tpMemoriaRam">
+                                        <option *ngFor="let valor of enumValues()">{{ valor }}</option>
+
+                                    </select>
+
+                                </div>
+                                <div class="form-group">
+
+                                    <label for="tamMemoriaRam" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Tamanho da
+                                        memória:</label>
+                                    <input type="number" class="form-control" name="tamMemoriaRam"
+                                        [(ngModel)]="ordemServico.infoTec.tamMemoriaRam">
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="processador" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Processador:</label>
+                                    <input type="text" class="form-control" name="processador"
+                                        [(ngModel)]="ordemServico.infoTec.processador">
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label for="tempProcessador" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Temperatura do processador:</label>
+                                    <input type="number" class="form-control" name="tempProcessador"
+                                        [(ngModel)]="ordemServico.infoTec.tempProcessador">
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm">
+                                <legend class="btn-secondary" style="border-radius: 5px; text-align: center;"> <i
+                                        class="bi bi-display"></i> Outras informações</legend>
+                                <div class="form-group">
+                                    <label for="sistemaOp" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Sistema
+                                        operacional:</label>
+                                    <input type="text" class="form-control" name="sistemaOp"
+                                        [(ngModel)]="ordemServico.infoTec.sistemaOp">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="placaVideo" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Placa de
+                                        vídeo:</label>
+                                    <input type="text" class="form-control" name="placaVideo"
+                                        [(ngModel)]="ordemServico.infoTec.placaVideo">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="placaMae" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Placa
+                                        mãe:</label>
+                                    <input type="text" class="form-control" name="placaMae"
+                                        [(ngModel)]="ordemServico.infoTec.placaMae">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="placaVideo" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Tamanho do
+                                        monitor:</label>
+                                    <input type="number" class="form-control" name="tamMonitor"
+                                        [(ngModel)]="ordemServico.infoTec.tamMonitor">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="voltEntrada" class="col-form-label"
+                                        style="font-size: 18px;font-weight: bold">Tensão de
+                                        entrada:</label>
+                                    <input type="text" class="form-control" name="voltEntrada"
+                                        [(ngModel)]="ordemServico.infoTec.voltEntrada">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="atualizaInfoTec()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalAdicionaServico" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 80%;">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold">Adicionar
+                    Serviço</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;">
+                <form style="width: 100%;">
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="situacao" class="col-form-label"
+                                style="font-size: 18px;font-weight: bold">Serviço:</label>
+                            <select class="form-control" name="situacao" [(ngModel)]="servico.id">
+                                <option *ngFor="let item of servicos;" [value]="item.id">{{item.nome}} | {{ item.valor |
+                                    currency:'BRL':'symbol':'1.2-2'}} </option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="atualizaServico()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" #modalAdicionaDesconto id="modalAdicionaDesconto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 80%;">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold">Adicionar
+                    Desconto</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;">
+                <form style="width: 100%;">
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="situacao" class="col-form-label"
+                                style="font-size: 18px;font-weight: bold">Valor:</label>
+                         
+
+                            <input type="text" class="form-control" name="valorDesconto" 
+                            [(ngModel)]="ordemServico.valorDesconto" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',',  align: 'left'}" >
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="atualizaDesconto()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Produto
+ -->
+<div class="modal fade" id="modalAdicionaProduto" #modalAdicionaProduto tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document" >
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold">Adicionar
+                    Produtos</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="card-body" style="margin-right: 50px;">
+
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div>
+                    </div>
+                    <div class="collapse navbar-collapse bg-dark" style="width: 100%;margin-top: 20px; margin-left: 5px;; float:left" >
+                      
+                      <form class="form-inline my-2 my-lg-0" style="width: 100%;margin-top: 150px;display: inline-block;">
+                        &nbsp;<input class="form-control mr-sm-10" [(ngModel)]="nomeProdutoBuscar" name="nome" type="search" style="width:60%;"placeholder="Pesquisar" aria-label="Pesquisar">
+                        <div class="input-group-prepend"style="display:inline">
+
+                            <select [(ngModel)]="categoriaBuscar" name="categoria"class="input-group-prepend form-control" id="inlineFormCustomSelect">
+                                <option></option>
+
+                                <option [value]="'HD'">HD</option>
+                                <option [value]="'SSD'">SSD</option>
+                                <option [value]="'MEMORIA RAM'">MEMORIA RAM</option>
+                                <option [value]="'PLACA DE VÍDEO'">PLACA DE VÍDEO</option>
+                                <option [value]="'PROCESSADOR'">PROCESSADOR</option>
+                                <option [value]="'PLACA MÃE'">PLACA MÃE</option>
+                                <option [value]="'TECLADO NOTEBOOK'">TECLADO NOTEBOOK</option>
+                                <option [value]="'TELA NOTEBOOK'">TELA NOTEBOOK</option>
+                                <option [value]="'OUTROS'">OUTROS</option>
+                            </select>
+                        </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-outline-success my-6 my-sm-0" (click)="consultarPorNomeECategoria(ordemServico.idEmpresa,nomeProdutoBuscar,categoriaBuscar)" type="submit">Pesquisar <strong><i class="bi bi-search" style="font-size: 15px;"></i></strong> </button>
+                     
+                     
+                    
+                    
+                    
+                    </form>
+                    </div>
+
+                  </nav>
+
+
+                
+                <table *ngIf="produtos.length != 0" class="table table-dark" style="margin-right: 50px;">
+                    <thead style="font-size: 20px;">
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Código</th>
+                        <th>Categoria</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of produtos; index as i;"
+                            [ngClass]="{'table-active': i % 2 == 0, '': i % 2 != 0}" style="font-size: 15px;" (click)="selecionaProduto(item)">
+                            <td> {{ item.id }}</td>
+                            <td> {{ item.nome }}</td>
+                            <td> {{ item.codigo }}</td>
+                            <td> {{ item.categoria }}</td>
+                            <td> {{ item.descricao }}</td>
+                            <td> {{ item.valor | currency:'BRL':'symbol':'1.2-2'}} </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+       
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Histórico
+ -->
+<div class="modal fade" id="modalAdicionaHistorico" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 80%;">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold">Adicionar
+                    Histórico</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;">
+                <form style="width: 100%;">
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="situacao" class="col-form-label"
+                                style="font-size: 18px;font-weight: bold">Situação:</label>
+                            <select class="form-control" name="situacao" [(ngModel)]="historico.situacao.id">
+                                <option *ngFor="let item of situacoes;" [value]="item.id">{{item.nome}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="informacao" class="col-form-label"
+                                style="font-size: 18px;font-weight: bold">Informação:</label>
+                            <textarea class="form-control" name="informacao"
+                                [(ngModel)]="historico.informacao"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="atualizaHistorico()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal TransferirOs
+ -->
+<div class="modal fade " #modalTransferir id="modalTransferir" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Transferir Ordem de Serviço</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="situacao" class="col-form-label" style="font-size: 18px;font-weight: bold">Transferir
+                        para o
+                        técnico:</label>
+                    <select class="form-control" name="situacao" [(ngModel)]="ordemServico.tecnicoResponsavel.id">
+                        <option *ngFor="let item of tecnicos;" [value]="item.id"> {{item.id}} - {{item.nome}}</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" (click)="transfereOs()">Salvar mudanças</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal TransferirOs
+ -->
+<div class="modal fade " #modalAtualizaStatus id="modalAtualizaStatus" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Atualizar Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="status" class="col-form-label" style="font-size: 18px;font-weight: bold">Status:</label>
+                    <select class="form-control" name="status" [(ngModel)]="ordemServico.status">
+                        <option *ngFor="let item of status;" [value]="item"> {{item}}</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="consultaOsId(id)">Fechar</button>
+                <button type="button" class="btn btn-primary" (click)="atualizaGeral()">Salvar mudanças</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="modalEditarOs" #modalEditarOs tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+
+
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 style="color: gold;">Atualizar Ordem de Serviço</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form style="width: 100%;">
+
+                    <div class="form-group">
+                        <label for="id" class="col-form-label" style="font-size: 18px;font-weight: bold">Nr:</label>
+                        <input type="number" #nrOs [(ngModel)]="ordemServico.nrOrdemServico" name="id" disabled
+                            style="background-color: #ccc;" class="form-control">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="clientes" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold;width: 100%;">Cliente:</label>
+                        <input class="form-control" name="nome" type="search" placeholder="Pesquisar"
+                            [(ngModel)]="ordemServico.cliente.nome" disabled aria-label="Pesquisar"
+                            style="display:inline;float: left;width: 95%;">
+                        &nbsp;
+                        <button class="btn btn-success" style="display:inline;float: left;margin-left: 7px;"
+                            (click)="consultarClientes(ordemServico.idEmpresa)" type="button"
+                            data-target="#modalClientes" data-toggle="modal"><strong><i
+                                    class="bi bi-search"></i></strong> </button>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="marca" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Marca:</label>
+                        <input type="text" #marca class="form-control" name="marca" [(ngModel)]="ordemServico.marca">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Modelo:</label>
+                        <input type="text" #modelo class="form-control" name="modelo" [(ngModel)]="ordemServico.modelo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nrSerie" class="col-form-label" style="font-size: 18px;font-weight: bold">Nr.
+                            Serie:</label>
+                        <input type="text" #nrSerie class="form-control" name="nrSerie"
+                            [(ngModel)]="ordemServico.nrSerie">
+                    </div>
+
+
+
+
+                    <div class="form-group">
+
+
+                        <label for="categorias" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold;width: 100%;">Categoria:</label>
+                        <input class="form-control" name="nome-categoria" type="search"
+                            [(ngModel)]="ordemServico.categoria.nome" disabled aria-label="Pesquisar"
+                            style="display:inline;float: left;width: 95%;">
+
+                        &nbsp;
+
+                        <button class="btn btn-success" style="display:inline;float: left;margin-left: 7px;"
+                            data-target="#modalCategorias" data-toggle="modal" type="button"
+                            (click)="consultarCategorias(ordemServico.idEmpresa)"><strong><i
+                                    class="bi bi-search"></i></strong> </button>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="acessorios" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold;width: 100%;">Acessorios:</label>
+
+                        <select class="form-control" #selectAcessorios multiple aria-label="multiple select example"
+                            style="width:95%;display:inline;float:left">
+                            <option *ngFor="let item of ordemServico.acessorios" [value]="item">{{item.nome}}</option>
+
+                        </select>
+                        &nbsp;
+
+                        <button class="btn btn-secondary" style="display:inline;float: left;margin-left: 7px;"
+                            (click)="consultarAcessorios(ordemServico.idEmpresa)" data-target="#modalAcessorios"
+                            data-toggle="modal" type="button"><strong><i class="bi bi-plus-circle"></i></strong>
+                        </button>
+
+                        <!--    <button class="btn btn-secondary" style="display:inline;float: left;margin-left: 7px; margin-top: 20px;" (click)="removerAcessorio(selectAcessorios.selectedIndex)"
+                            type="button"><strong><i class="bi bi-dash-circle"></i></strong> </button>
+ -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dsDefeitoTecnico" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Defeito constatado pelo técnico:</label>
+                        <textarea class="form-control" name="dsDefeitoTecnico"
+                            [(ngModel)]="ordemServico.dsDefeitoTecnico"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dsDefeitoTecnico" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">ORÇAMENTO APROVADO:</label>
+                        <select class="form-control" name="dsDefeitoTecnico"
+                            [(ngModel)]="ordemServico.orcamentoAprovado">
+                        <option value="false">NÃO</option>
+                        <option value="true">SIM</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dsDefeito" class="col-form-label" style="font-size: 18px;font-weight: bold">Defeito
+                            descrito pelo cliente:</label>
+                        <textarea class="form-control" name="dsDefeitoCliente"
+                            [(ngModel)]="ordemServico.dsDefeitoCliente"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="osbservacao" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Observação:</label>
+                        <textarea class="form-control" name="osbservacao"
+                            [(ngModel)]="ordemServico.osbservacao"></textarea>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-body" style="width: 100%;float: left;">
+
+                <span style="float:left;  ">
+                    <button type="button" class="btn btn-warning" style="font-size: 16px;"
+                        (click)="atualizaGeral()">Atualizar
+                        OS</button>&nbsp;&nbsp;
+                </span>
+
+                <span style="float:right;  ">
+                    <button type="button" class="btn btn-secondary" style="font-size: 16px;"
+                        data-dismiss="modal">Cancelar</button>&nbsp;&nbsp;
+
+
+                </span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade "  #modalExcluidoSucesso id="modalExcluidoSucesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content bg-dark text-white ">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title " id="exampleModalLabel"> <span class="text-success"> <i
+                            class="bi bi-info-circle-fill"></i> </span> &nbsp; Mensagem </h3>
+                </div>
+            <div class="modal-body">
+                <h4 class="text-success" id="exampleModalLabel"> Registro excluído com sucesso!
+                </h4>
+
+            </div>
+
+            <div class="modal-footer" style="text-align: center;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/os']">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Botão para acionar modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#excluidoSucesso">
+      Abrir modal de demonstração
+    </button>
+     -->
+<!-- Modal -->
+
+
+<div class="modal fade " #modalConfirmaExc id="modalConfirmaExc" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content bg-dark text-white ">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title " id="exampleModalLabel"> <span class="text-warning"> <i
+                            class="bi bi-exclamation-triangle-fill"></i> </span> &nbsp; Confirmação </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-warning" id="exampleModalLabel"> Tem certeza que deseja excluir?
+                </h4>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                <button type="button" class="btn btn-primary" id="botaConfirmaExclusao" data-dismiss="modal"
+                    data-toggle="modal" (click)="excluirOs()" data-target= "#modalExcluidoSucesso">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL SELECIONA CLIENTE -->
+<div class="modal fade row justify-content-center" id="modalClientes" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" style="border-color: white;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-lg row justify-content-center" role="document"
+        style="width: 100%; border-color: white;">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold ;">Clientes</h3>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;">
+
+                <div class="container row justify-content-center" style="width: 100%;">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-20">
+                            <nav class="navbar navbar-expand-lg bg-dark">
+                                <div>
+                                </div>
+                                <div class="collapse navbar-collapse" style="width: 100%;">
+
+                                    <form class="form-inline" style="width: 100%;display: inline-block;">
+                                        &nbsp;<input class="form-control" [(ngModel)]="nomeClienteBuscar"
+                                            name="nomeClienteBuscar" style="width: 80%;" placeholder="Buscar Cliente"
+                                            aria-label="Pesquisar">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-outline-success my-6 my-sm-0"
+                                            (click)="consultarPorNomeCliente(ordemServico.idEmpresa,nomeClienteBuscar)"
+                                            type="submit">Pesquisar <strong><i class="bi bi-search"
+                                                    style="font-size: 15px;"></i></strong> </button>
+                                    </form>
+                                </div>
+                            </nav>
+                            <table class="table table-dark" style="margin-right: 50px;">
+                                <thead style="font-size: 25px;">
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>Telefone</th>
+                                    <th>CNPJ</th>
+                                    <th>CPF</th>
+                                </thead>
+                                <tbody class="trClientes">
+                                    <tr *ngFor="let item of clientes; index as i;" data-dismiss="modal"
+                                        [ngClass]="{'table-active': i % 2 == 0, '': i % 2 != 0}"
+                                        (click)="selecionaCliente(item)">
+                                        <td> {{ item.id }}</td>
+                                        <td> {{ item.nome }} </td>
+                                        <td> {{ item.email }} </td>
+                                        <td> {{ item.cnpj }} </td>
+                                        <td> {{ item.cpf }} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- MODAL CATEGORIA -->
+<div class="modal fade row justify-content-center" id="modalCategorias" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" style="border-color: white;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-sm row justify-content-center" role="document"
+        style="width: 100%; border-color: white; ">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold ;">Categorias</h3>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;margin: auto 10px auto 15px">
+
+                <div class="container row justify-content-center" style="width: 100%;">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-20">
+                            <nav class="navbar navbar-expand-lg bg-dark">
+                                <div>
+                                </div>
+
+                            </nav>
+                            <table class="table table-dark" style="margin-right: 50px;">
+                                <thead style="font-size: 25px;">
+                                    <th>Id</th>
+                                    <th>Nome</th>
+
+                                </thead>
+                                <tbody class="trClientes">
+                                    <tr *ngFor="let item of categorias; index as i;" data-dismiss="modal"
+                                        [ngClass]="{'table-active': i % 2 == 0, '': i % 2 != 0}"
+                                        (click)="selecionaCategoria(item)">
+                                        <td> {{ item.id }}</td>
+                                        <td> {{ item.nome }} </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ACESSORIOS -->
+<div class="modal fade row justify-content-center" id="modalAcessorios" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" style="border-color: white;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-dialog-centered row justify-content-center" role="document"
+        style="width: 100%; border-color: white;">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold ;">Acessorios</h3>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;">
+
+                <div class="container row justify-content-center" style="width: 100%;">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-20">
+                            <div class="form-check" *ngFor="let item of acessorios  index as i;">
+                                <span>
+                                    <input class="form-check-input" #checkboxeAcessorios class='checkboxeAcessorios'
+                                        type="checkbox" [value]="item" id="defaultCheck1"
+                                        (change)="selecionaAcessorios(item, i)">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        {{item.nome}}
+                                    </label>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

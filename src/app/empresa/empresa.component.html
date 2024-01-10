@@ -1,0 +1,58 @@
+
+<div class="container" style="margin-top:50px;margin-bottom:200px ;">
+    <div class="row justify-content-center;" >
+        <div class="col-md-10" >
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h4 style="text-align: right;">Passo 2</h4>
+
+                    <h1>Cadastrar Informações da Empresa</h1>
+                </div>
+                <div class="card-body">
+                    <form (submit)="onSubmit()" #myForm="ngForm">
+                        <div class="form-group" ngModelGroup="empresa">
+                            <label for="nomeFantasia">Nome Fantasia:</label>
+                            <input #nomeFantasia type="text" class="form-control" id="nomeFantasia"  name="nomeFantasia" [(ngModel)] ="empresa.nomeFantasia"   placeholder="Digite nome fantasia da empresa" required>     
+                        </div>
+                          <div class="form-group">
+                            <label for="razaoSocial">Razão Social:</label>
+                            <input type="text" class="form-control" id="razaoSocial"   name="razaoSocial" [(ngModel)] ="empresa.razaoSocial"  placeholder="Digite a razão social da empresa">
+                          </div>
+                          <div class="form-group">
+                            <label for="cnpj">CNPJ:</label>
+                            <input type="text" mask="00.000.000/0000-00"  class="form-control" id="cnpj"  name="cnpj"  [(ngModel)] = "empresa.cnpj" placeholder="Digite o CNPJ da empresa">
+                          </div>
+                          <div class="form-group">
+                            <label for="endereço">Endereço:</label>
+                            <input type="text" class="form-control" id="endereço" name="endereço" [(ngModel)] = "empresa.endereco" placeholder="Digite o endereço da empresa">
+                          </div>
+                          <div class="form-group">
+                            <label for="email">E-mail:</label>
+                            <input type="email" class="form-control" id="email"  name="email" [(ngModel)] = "empresa.email" placeholder="Digite o e-mail da empresa">
+                          </div>
+                          <div class="form-group">
+                            <label for="telefone">Telefone:</label>
+                            <input type="text" class="form-control" id="telefone" mask="(00) 0000-0000" name="telefone" [(ngModel)] = "empresa.telefone" placeholder="Digite o telefone da empresa">
+                          </div>
+                          <div class="form-group">
+                            <label for="text">Site institucional:</label>
+                            <input type="text" class="form-control" id="site"  name="site" [(ngModel)] = "empresa.site" placeholder="Digite o site da empresa">
+                          </div>
+                          <div class="form-group">
+                            <label for="urlLogoTipo">URL Logo:</label>
+                            <input type="text" class="form-control" id="urlLogoTipo" name="urlLogoTipo" [(ngModel)] = "empresa.urlLogoTipo" placeholder="Digite a url do logo da empresa">
+                          </div>
+                          <div class="form-group">
+                            <label for="slogan">Slogan:</label>
+                            <input type="text" class="form-control" id="slogan"  name="slogan" [(ngModel)] = "empresa.slogan" placeholder="Digite o slogan da empresa">
+                          </div>
+                          <button type="submit" class="btn btn-primary btn-block mt-3" [disabled]="empresa.nomeFantasia == ''">Finalizar Cadastro</button>
+
+                        </form>
+               
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

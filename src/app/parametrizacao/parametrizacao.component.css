@@ -1,0 +1,11 @@
+a{
+    text-decoration: none;
+    color:rgb(73, 75, 77)
+}
+a:hover{
+    color: black;
+}
+h1{
+    color: gold;
+    font-size: 30px;
+}

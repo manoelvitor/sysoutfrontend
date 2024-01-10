@@ -1,0 +1,406 @@
+<app-header></app-header>
+
+<div class="card" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-bottom: 100px;width: 100%;">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document" style="width: 100%;">
+        <div class="modal-content bg-light ">
+            <div class="card-header bg-dark text-white" style="width: 100%;">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold">Cadastro de Ordem
+                    de Serviço</h3>
+            </div>
+            <div class="card-body" style="width: 100%;">
+                <form style="width: 100%;">
+
+
+                    <div class="form-group">
+
+
+
+                        <label for="clientes" class="col-form-label"
+                            style="font-size: 16px;font-weight: bold;width: 100%;">Cliente:</label>
+                        <input class="form-control" name="nome" type="search" placeholder="Pesquisar"
+                            [(ngModel)]="cliente.nome" disabled aria-label="Pesquisar"
+                            style="display:inline;float: left;width: 95%;">
+
+                        &nbsp;
+
+                        <button class="btn btn-success" style="display:inline;float: left;margin-left: 7px;"
+                            type="button" data-target="#modalClientes" data-toggle="modal"><strong><i
+                                    class="bi bi-search"></i></strong> </button>
+
+
+                    </div>
+
+
+                    <br>
+
+
+                    <div class="form-group">
+
+
+
+                        <label for="categorias" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold;width: 100%;">Categoria:</label>
+                        <input class="form-control" name="nome-categoria" type="search" placeholder="Buscar categoria"
+                            [(ngModel)]="categoria.nome" disabled aria-label="Pesquisar"
+                            style="display:inline;float: left;width: 95%;">
+
+                        &nbsp;
+
+                        <button class="btn btn-success" style="display:inline;float: left;margin-left: 7px;"
+                            data-target="#modalCategorias" data-toggle="modal" type="button"><strong><i
+                                    class="bi bi-search"></i></strong> </button>
+
+
+                    </div>
+                    <br>
+
+
+
+
+                    <div class="form-group">
+                        <label for="marca" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Marca:</label>
+                        <input type="text" class="form-control" name="marca" [(ngModel)]="ordemServico.marca">
+                    </div>
+                    <div class="form-group">
+                        <label for="modelo" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Modelo:</label>
+                        <input type="text" class="form-control" name="modelo" [(ngModel)]="ordemServico.modelo">
+                    </div>
+                    <div class="form-group">
+                        <label for="modelo" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Cor:</label>
+                        <input type="text" class="form-control" name="modelo" [(ngModel)]="ordemServico.cor">
+                    </div>
+                    <div class="form-group">
+                        <label for="numSerie" class="col-form-label" style="font-size: 18px;font-weight: bold">Número de
+                            série:</label>
+                        <input type="text" class="form-control" name="nrSerie" [(ngModel)]="ordemServico.nrSerie">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="acessorios" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold;width: 100%;">Acessorios:</label>
+
+                        <select class="form-control" #selectAcessorios multiple aria-label="multiple select example"
+                            style="width:95%;display:inline;float:left">
+                            <option *ngFor="let item of acessoriosSelecionados" [value]="item">{{item.nome}}</option>
+
+                        </select>
+
+
+
+                        &nbsp;
+
+                        <button class="btn btn-secondary" style="display:inline;float: left;margin-left: 7px;"
+                            data-target="#modalAcessorios" data-toggle="modal" type="button"><strong><i
+                                    class="bi bi-plus-circle"></i></strong> </button>
+
+                        <!--    <button class="btn btn-secondary" style="display:inline;float: left;margin-left: 7px; margin-top: 20px;" (click)="removerAcessorio(selectAcessorios.selectedIndex)"
+                            type="button"><strong><i class="bi bi-dash-circle"></i></strong> </button>
+ -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dsDefeitoCliente" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Defeito descrito pelo cliente:</label>
+                        <textarea class="form-control" name="dsDefeitoCliente"
+                            [(ngModel)]="ordemServico.dsDefeitoCliente"></textarea>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="osbservacao" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Observação:</label>
+                        <textarea class="form-control" name="osbservacao"
+                            [(ngModel)]="ordemServico.osbservacao"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="valorOrcamento" class="col-form-label"
+                            style="font-size: 18px;font-weight: bold">Valor do orçamento:</label>
+                        <input type="text" class="form-control" name="valorOrcamento"
+                            [(ngModel)]="ordemServico.valorOrcamento" currencyMask
+                            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',',  align: 'left'}">
+                    </div>
+
+                </form>
+            </div>
+            <div class="card-footer">
+                <button type="button" style="float: right;" class="btn btn-primary" data-target="#modalConfirma"
+                    data-toggle="modal" (click)="setConfirma()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade row justify-content-center" id="modalClientes" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" style="border-color: white;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-lg row justify-content-center" role="document"
+        style="width: 100%; border-color: white;">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold ;">Clientes</h3>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;">
+
+                <div class="container row justify-content-center" style="width: 100%;">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-20">
+                            <nav class="navbar navbar-expand-lg bg-dark">
+                                <div>
+                                </div>
+                                <div class="collapse navbar-collapse" style="width: 100%;">
+
+                                    <form class="form-inline" style="width: 100%;display: inline-block;">
+                                        &nbsp;<input class="form-control" [(ngModel)]="nomeClienteBuscar"
+                                            name="nomeClienteBuscar" style="width: 80%;" placeholder="Buscar Cliente"
+                                            aria-label="Pesquisar">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-outline-success my-6 my-sm-0"
+                                            (click)="consultarPorNomeCliente(idEmpresaGlobal,nomeClienteBuscar)"
+                                            type="submit">Pesquisar <strong><i class="bi bi-search"
+                                                    style="font-size: 15px;"></i></strong> </button>
+                                    </form>
+                                </div>
+                            </nav>
+                            <table class="table table-dark" style="margin-right: 50px;">
+                                <thead style="font-size: 25px;">
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>Telefone</th>
+                                    <th>CNPJ</th>
+                                    <th>CPF</th>
+                                </thead>
+                                <tbody class="trClientes">
+                                    <tr *ngFor="let item of clientes; index as i;" data-dismiss="modal"
+                                        [ngClass]="{'table-active': i % 2 == 0, '': i % 2 != 0}"
+                                        (click)="selecionaCliente(item)">
+                                        <td> {{ item.id }}</td>
+                                        <td> {{ item.nome }} </td>
+                                        <td> {{ item.email }} </td>
+                                        <td> {{ item.cnpj }} </td>
+                                        <td> {{ item.cpf }} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade row justify-content-center" id="modalCategorias" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" style="border-color: white;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-sm row justify-content-center" role="document"
+        style="width: 100%; border-color: white; ">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold ;">Categorias</h3>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;margin: auto 10px auto 15px">
+
+                <div class="container row justify-content-center" style="width: 100%;">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-20">
+                            <nav class="navbar navbar-expand-lg bg-dark">
+                                <div>
+                                </div>
+
+                            </nav>
+                            <table class="table table-dark" style="margin-right: 50px;">
+                                <thead style="font-size: 25px;">
+                                    <th>Id</th>
+                                    <th>Nome</th>
+
+                                </thead>
+                                <tbody class="trClientes">
+                                    <tr *ngFor="let item of categorias; index as i;" data-dismiss="modal"
+                                        [ngClass]="{'table-active': i % 2 == 0, '': i % 2 != 0}"
+                                        (click)="selecionaCategoria(item)">
+                                        <td> {{ item.id }}</td>
+                                        <td> {{ item.nome }} </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade row justify-content-center" id="modalAcessorios" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" style="border-color: white;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-dialog-centered row justify-content-center" role="document"
+        style="width: 100%; border-color: white;">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold ;">Acessorios</h3>
+
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;">
+
+                <div class="container row justify-content-center" style="width: 100%;">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-md-20">
+                            <!--    <nav class="navbar navbar-expand-lg bg-dark">
+                                <div>
+                                </div>
+                                <div class="collapse navbar-collapse" style="width: 100%;">
+
+                                    <form class="form-inline" style="width: 100%;display: inline-block;">
+                                        &nbsp;<input class="form-control" [(ngModel)]="nomeClienteBuscar"
+                                            name="nomeClienteBuscar" style="width: 80%;" placeholder="Buscar Cliente"
+                                            aria-label="Pesquisar">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-outline-success my-6 my-sm-0"
+                                            (click)="consultarPorNomeCliente(idEmpresaGlobal,nomeClienteBuscar)"
+                                            type="submit">Pesquisar <strong><i class="bi bi-search"
+                                                    style="font-size: 15px;"></i></strong> </button>
+                                    </form>
+                                </div>
+                            </nav> -->
+                            <div class="form-check" *ngFor="let item of acessorios  index as i;">
+                                <span>
+                                    <input class="form-check-input" #checkboxeAcessorios class='checkboxeAcessorios'
+                                        type="checkbox" [value]="item" id="defaultCheck1"
+                                        (change)="selecionaAcessorios(item, i)">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        {{item.nome}}
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="modalConfirma" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="width: 80%;">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold">Confirmar
+                    Informações</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%;">
+                <table class="table table-hover table-dark" style="width: 100%; margin:auto;">
+                    <tbody>
+                        <tr>
+                            <th scope="row">CLIENTE</th>
+                            <td>{{cliente.nome}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">MARCA</th>
+                            <td>{{ordemServico.marca}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">MODELO</th>
+                            <td>{{ordemServico.modelo}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">COR</th>
+                            <td>{{ordemServico.cor}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">NÚMERO DE SÉRIE</th>
+                            <td>{{ordemServico.nrSerie}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CATEGORIA</th>
+                            <td>{{categoria.nome}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ACESSÓRIOS</th>
+                            <td><span *ngFor="let item of acessoriosSelecionados;"> {{item.nome}}, </span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">DEFEITOS RELATADOS</th>
+                            <td> {{ordemServico.dsDefeitoCliente}}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">OBSERVAÇÃO</th>
+                            <td> {{ordemServico.osbservacao }}</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">VALOR ORÇAMENTO</th>
+                            <td> {{ordemServico.valorOrcamento | currency:'BRL':'symbol':'1.2-2' }}</td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cadastrar()"
+                    data-toggle="modal" data-target="#salvoSucesso">Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade " id="salvoSucesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content bg-dark text-white ">
+            <div class="modal-header bg-dark text-white">
+                <h3 class="modal-title " id="exampleModalLabel"> <span class="text-success"> <i
+                            class="bi bi-info-circle-fill"></i> </span> &nbsp; Mensagem </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"
+                    [routerLink]="['/os-consultar']">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-success" id="exampleModalLabel"> Ordem de Serviço cadastrada com sucesso!
+                </h4>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="preencheDocumento(ordemServico)">Imprimir documento</button>
+            </div>
+        </div>
+    </div>
+</div>

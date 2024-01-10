@@ -1,0 +1,78 @@
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Logo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
+      aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+      <ul class="navbar-nav mr-auto" style="margin: auto;">
+        <li class="nav-item active">
+          <a class="nav-link bg-dark text-white" [routerLink]="['/os']"><i
+              class="bi bi-file-earmark-medical-fill"></i> Ordem de Serviço</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link bg-dark text-white" [routerLink]="['/cliente-consultar']"><i
+              class="bi bi-people-fill"></i> Clientes</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link bg-dark text-white" [routerLink]="['/tecnico-consultar']"><i
+              class="bi bi-person-badge"></i>
+            Técnicos</a>
+          </li>
+
+
+        <li class="nav-item dropdown active"  id="parametrizacao">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+            aria-haspopup="true" aria-expanded="false" >
+                <i class="bi bi-gear-fill"></i> 
+            Parametrização
+          </a>
+          <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown" style="border-color: aqua;text-align: center;">
+
+            <a class="nav-link bg-dark text-white" [routerLink]="['/servico-consultar']"><i
+                class="bi bi-tools"></i>
+              Serviços</a>
+            <div class="dropdown-divider bg-dark text-white"> </div>
+            <a class="nav-link nav-linkdropdown-item bg-dark text-white" [routerLink]="['/categorias']"><i class="bi bi-laptop"></i>
+              Categorias</a>
+            <div class="dropdown-divider bg-dark text-white"> </div>
+            <span *ngIf="isAdmin">
+              <a class="nav-link dropdown-item bg-dark text-white" [routerLink]="['/acessorios']"><i class="bi bi-earbuds"></i>
+                Acessórios</a>
+              <div class="dropdown-divider"> </div>
+            </span>
+            <a class="nav-link dropdown-item bg-dark text-white" [routerLink]="['/situacoes']"><i
+                class="bi bi-file-break-fill"></i> Situações</a>
+
+            <div class="dropdown-divider"> </div>
+
+            <a class="nav-link dropdown-item bg-dark text-white" [routerLink]="['/produto-consultar']">
+
+              <i class="bi bi-memory" style="font-size: 10px; text-align: center;">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+                  class="bi bi-memory" viewBox="0 0 16 16">
+                  <path
+                    d="M1 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.586a1 1 0 0 0 .707-.293l.353-.353a.5.5 0 0 1 .708 0l.353.353a1 1 0 0 0 .707.293H15a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H1Zm.5 1h3a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5Zm5 0h3a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5Zm4.5.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-4ZM2 10v2H1v-2h1Zm2 0v2H3v-2h1Zm2 0v2H5v-2h1Zm3 0v2H8v-2h1Zm2 0v2h-1v-2h1Zm2 0v2h-1v-2h1Zm2 0v2h-1v-2h1Z" />
+                </svg>
+
+              </i>
+              Produtos</a>
+          </div>
+        </li>
+ 
+      </ul>
+      
+    <h4 style="display:inline;color:white"><!-- {{this.empresa.nomeFantasia}} - {{this.nome}} -->
+
+      <a class="dropdown-item bg-dark text-white" href="#" (click)="logout()"><i class="bi bi-power"></i> Sair</a>
+
+
+    </h4>
+
+    </div>
+  </nav>
+</header>

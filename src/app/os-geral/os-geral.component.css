@@ -1,0 +1,78 @@
+a{
+
+    font-size: 18px;
+    font-weight: bold;
+    background-color: black;
+    color: gold !important;
+    border-radius: 3px;
+
+}
+a:hover{
+    background-color: rgb(43, 41, 41) !important;
+
+}
+#conteudo{
+    margin: auto;
+    margin-top: 50px;
+    width: 95%;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 100px;
+  
+   
+}
+
+#myTab{
+    width:95%;
+    padding: 0;
+    margin: auto;
+
+}
+#myTabContent{
+    width:95%;
+    margin: auto;
+    margin-top: 10px;
+    
+}
+
+ul{
+    border-bottom: medium;
+    width:100%;
+
+
+    
+
+
+
+
+}
+
+th{
+    font-size: 13px;
+}
+
+label{
+    font-size: 13px !important;
+}
+legend{
+    font-size: 15px !important;
+}
+
+h3{
+    font-size: 18px;
+}
+
+#cabecalho-os{
+    margin-bottom: 30px;
+    height: 100px;
+    border: 2px solid white;
+    padding: 15px;
+    border-radius: 10px ;
+    background-color: rgba(0, 0, 255, 0.356);
+}
+
+.trClientes :hover,td:hover,tr:hover, .table-active:hover{
+    background-color: #ccc !important;
+    color: black !important;
+    cursor: pointer !important;
+}

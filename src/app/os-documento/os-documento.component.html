@@ -1,0 +1,193 @@
+<app-header></app-header>
+
+
+<div class="container"  #content style="margin-top: 10px;margin-bottom: 100px;">
+  <div style="text-align: right; margin:10px ;"> 
+
+    <button  class="btn btn-success" type="button" (click)="printPdf()" style="margin:auto;"> <i class="bi bi-printer-fill"></i> Imprimir</button>
+  </div>
+  <div class="row">
+    <div class="col" style="width:200px;height: 200px;text-align: center;margin:auto">
+     <img  style="width:180px;height: 180px" src="https://img.freepik.com/vetores-gratis/ilustracao-da-silhueta-do-icone-da-raposa_361591-2507.jpg?w=740&t=st=1684027448~exp=1684028048~hmac=899e9ea0979760d14e13b9a14081df5e77f5d496dc6272863945d6f36beee72d" alt="" srcset="">
+    </div>
+    <div class="col">
+
+    </div>
+    <div class="col" style="margin:auto;" >
+     <h4 style="width: 100%;width: 244px"><strong><u>ORDEM DE SERVIÇO</u></strong></h4> 
+    </div>
+    <div class="col">
+
+    </div>
+    <div class="col" style="margin:auto">
+      <h5>Nr: {{ordemServico.nrOrdemServico}}</h5>
+      <h5  style="width: 160px">Data: {{data}} </h5>
+      <h5>Hora: {{hora}} </h5>
+      
+
+    </div>
+  </div>
+  <div class="row">
+
+    <legend>Dados Cliente</legend>
+
+    <table style=" width: 100%;">
+        
+        <tr>
+          <th>Nome:</th>
+          <td>{{ordemServico.cliente.nome}}</td>
+        </tr>
+        <tr>
+          <th>CPF/CNPJ:</th>
+          <td>{{ordemServico.cliente.cpf}}</td>
+
+        </tr>
+        <tr>
+          <th>Telefone:</th>
+          <td>{{ordemServico.cliente.telefone}}</td>
+
+        </tr>
+        <tr>
+          <th>E-mail:</th>
+          <td>{{ordemServico.cliente.email}}</td>
+
+        </tr>
+
+
+    </table>
+
+
+  </div>
+
+  <div class="row">
+
+    <legend>Produto</legend>
+
+    <table style=" width: 100%;">
+        
+        <tr>
+          <th>Marca:</th>
+          <td>{{ordemServico.marca}}</td>
+        </tr>
+        <tr>
+          <th>Modelo:</th>
+          <td>{{ordemServico.modelo}}</td>
+        </tr>
+        <tr>
+          <th>Nr Série:</th>
+          <td>{{ordemServico.nrSerie}}</td>
+
+        </tr>
+        <tr>
+          <th>Categoria:</th>
+          <td>{{ordemServico.categoria.nome}}</td>
+        </tr>
+        <tr>
+          <th>Acessórios:</th>
+          <td><span *ngFor="let item of ordemServico.acessorios;"> {{item.nome}}, </span></td>
+        </tr>
+        <tr>
+          <th>Observação:</th>
+          <td>{{ordemServico.osbservacao}}</td>
+        </tr>
+
+
+    </table>
+
+    
+
+    <legend style="border: 1px solid #ccc; width: 100%; text-align: center;">Defeito Relatado</legend>
+
+   <p style="height: 100px;">
+    <td>{{ordemServico.dsDefeitoCliente}}</td>
+
+   </p>
+
+
+
+
+    <legend>Técnico Responsável</legend>
+
+    <table style=" width: 100%;">
+        
+        <tr>
+          <th>Nome:</th>
+          <td>{{ordemServico.tecnicoResponsavel.nome}}</td>
+        </tr>
+        <tr>
+          <th>E-mail:</th>
+          <td>{{ordemServico.tecnicoResponsavel.email}}</td>
+        </tr>
+        
+    </table>
+
+    <legend>Empresa Prestadora</legend>
+
+    <table style=" width: 100%;">
+        
+        <tr>
+          <th>Nome Fantasia:</th>
+          <td>{{empresa.nomeFantasia}}</td>
+        </tr>
+        <tr>
+          <th>Razão Social:</th>
+          <td>{{empresa.razaoSocial}}</td>
+        </tr>
+        <tr>
+          <th>CNPJ:</th>
+          <td>{{empresa.cnpj}}</td>
+        </tr>
+        <tr>
+          <th>E-mail:</th>
+          <td>{{empresa.email}}</td>
+        </tr>
+        <tr>
+          <th>Telefone:</th>
+          <td>{{empresa.telefone}}</td>
+        </tr>
+        
+
+
+    </table>
+
+    <legend>Informações Adicionais</legend>
+
+    <table style=" width: 100%;">
+        
+        <tr>
+          <th>Consulta pelo site:</th>
+          <td>sysout.herokuapp.com/cliente/consulta-os</td>
+        </tr>
+       
+
+
+    </table>
+
+
+
+  </div>
+  <div class="row" id="assinatura">
+    <div class="col" >
+
+
+      <hr>
+      <h5>{{ordemServico.cliente.nome}}
+      </h5>
+      Cliente
+      
+        </div>
+    <div class="col" style="margin:auto">
+      <hr>
+      <h5>{{ordemServico.tecnicoResponsavel.nome}}</h5>
+     Técnico Responsável
+      
+    </div>
+
+
+  </div>
+
+
+
+</div>
+
+

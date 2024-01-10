@@ -1,0 +1,5 @@
+.servicos :hover,td:hover,tr:hover, .table-active:hover{
+    background-color: #ccc !important;
+    color: black !important;
+    cursor: pointer !important;
+}

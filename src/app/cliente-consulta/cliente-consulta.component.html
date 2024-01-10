@@ -1,0 +1,203 @@
+<app-header></app-header>
+
+
+<div class="container" style="margin-top:100px; margin-bottom: 100px;width: 100%;">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-20">
+
+            <div class="card bg-light">
+
+                <div class="card-header bg-dark text-white">
+                    <h1>Clientes <i class="bi bi-tools" style="font-size: 40px; text-align: center; float:right"></i>
+
+                    </h1>
+                </div>
+                <div style="float: left; margin-top:20px;margin-left:25px;">
+                    <button class="btn btn-outline-secondary my-6 my-sm-0" style="font-size: 18px; " data-target="#modalEditar"  data-toggle="modal" (click)="editar(cliente,false)" type="button">Adicionar <strong><i class="bi bi-plus-circle-fill" style="font-size: 25px;"></i></strong> </button>
+                </div>
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div>
+                    </div>
+                    <div class="collapse navbar-collapse" style="width: 100%;margin-top: 20px; margin-left: 5px;; float:left" >
+                      
+                      <form class="form-inline my-2 my-lg-0" style="width: 100%;margin-top: 150px;display: inline-block;">
+                        &nbsp;<input class="form-control mr-sm-10" [(ngModel)]="nomeBuscar" name="nome" type="search" style="width: 83%;"placeholder="Pesquisar" aria-label="Pesquisar">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-outline-success my-6 my-sm-0" (click)="consultarPorNome(idEmpresaGlobal,nomeBuscar)" type="submit">Pesquisar <strong><i class="bi bi-search" style="font-size: 15px;"></i></strong> </button>
+                      </form>
+                    </div>
+
+                  </nav>
+
+                <div class="card-body">
+                   <table class="table table-dark" style="margin-right: 50px;width:1150px;">
+                        <thead style="font-size: 25px;">
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>E-mail</th>
+                            <th>Endereço</th>
+                            <th style="display:none">CNPJ</th>
+                            <th style="display:none">CPF</th>
+                            <th style="display:none">RG</th>
+                            <th style="text-align: center;">Ações</th>
+                        </thead>
+                        <tbody>
+                            <tr  *ngFor="let item of clientes; index as i;"   [ngClass]="{'table-active': i % 2 == 0, '': i % 2 != 0}">
+                                <td> {{ item.id }}</td>
+                                <td> {{ item.nome }}</td>
+                                <td mask="telefoneMask"> {{formatarTelefone(item.telefone) }}</td>
+                                <td> {{ item.email }} </td>
+                                <td> {{ item.endereco }} </td>
+                                <td style="display:none"> {{ item.cnpj }} </td>
+                                <td style="display:none"> {{ item.cpf }} </td>
+                                <td style="display:none"> {{ item.rg }} </td>
+
+                                <td style="text-align: center;">
+                                    <button type="button" class="btn btn-primary" data-target="#modalEditar"  data-toggle="modal" (click)="editar(item, true)"><i
+                                            class="bi bi-pencil-square"  ></i> Detalhes </button>
+                                    &nbsp;
+                              
+                                </td>
+
+                     
+                                  
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div   #modalEditar class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document" >
+    <div class="modal-content bg-dark text-white" >
+      <div class="modal-header bg-dark text-white" >
+        <h3 *ngIf="labelEditar"  class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold" >Detalhes</h3>
+        <h3 *ngIf="!labelEditar"  class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold" >Inserção</h3>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+        <form style="width: 100%;">
+    
+            <div class="form-group">
+                <label for="id" class="col-form-label" style="font-size: 18px;font-weight: bold">ID:</label>
+                <input type="number" #id [(ngModel)] = "cliente.id" name="id" disabled style="background-color: #ccc;" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="nome" class="col-form-label"  style="font-size: 18px;font-weight: bold">NOME:</label>
+                <input type="nome" #nome class="form-control" name="nome" [(ngModel)] = "cliente.nome" >
+
+            </div>
+            <div class="form-group">
+                <label for="telefone" class="col-form-label"  style="font-size: 18px;font-weight: bold">TELEFONE:</label>
+                <input type="text" #telefone class="form-control" name="telefone"  mask="(00) 00000-0000" [(ngModel)] = "cliente.telefone"  >
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-form-label"  style="font-size: 18px;font-weight: bold">E-MAIL:</label>
+                <input type="email" #email class="form-control" name="email" [(ngModel)] = "cliente.email" >
+            </div>
+            <div class="form-group">
+                <label for="endereco" class="col-form-label"  style="font-size: 18px;font-weight: bold">Endereço:</label>
+                <input type="text" #endereco class="form-control" name="endereco" [(ngModel)] = "cliente.endereco" >
+            </div>
+            <div class="form-group">
+                <label for="cnpj" class="col-form-label"  style="font-size: 18px;font-weight: bold">CNPJ:</label>
+                <input type="text" #cnpj class="form-control" name="cnpj" mask="00.000.000/0000-00" [(ngModel)] = "cliente.cnpj" >
+            </div>
+            <div class="form-group">
+                <label for="cpf" class="col-form-label"  style="font-size: 18px;font-weight: bold">CPF:</label>
+                <input type="text" #cpf class="form-control" name="cpf" mask="000.000.000-00" [(ngModel)] = "cliente.cpf" >
+            </div>
+            <div class="form-group">
+                <label for="rg" class="col-form-label"  style="font-size: 18px;font-weight: bold">RG:</label>
+                <input type="text" #rg class="form-control" name="rg"  mask="00.000.000-0" [(ngModel)] = "cliente.rg" >
+            </div>
+   
+        </form>
+      </div>
+      <div  class="modal-body" style="width: 100%;float: left;">
+        
+        <button  *ngIf="labelEditar" type="button" class="btn btn-danger"   style="font-size: 20px;" data-toggle="modal" data-target="#confirmaExclusao" ><i class="bi bi-trash-fill"></i>
+            Excluir</button> 
+        <span style="float:right;  " >
+            <button type="button" class="btn btn-secondary"   style="font-size: 20px;" data-dismiss="modal">Cancelar</button>&nbsp;&nbsp;
+            <button *ngIf="labelEditar" type="button" class="btn btn-secondary" style="font-size: 20px;" (click)="desabilitaCampos(false)">Editar</button> &nbsp;&nbsp;
+    
+       
+            <button type="button" class="btn btn-primary" style="font-size: 20px;" data-dismiss="modal"(click)="salvar(cliente,labelEditar)">  Salvar <i class="bi bi-check-circle-fill"></i></button>
+        </span>
+
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div  class="modal fade " id="excluidoSucesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+      <div class="modal-content bg-dark text-white ">
+        <div class="modal-header bg-dark text-white">
+          <h3 class="modal-title " id="exampleModalLabel">  <span class="text-success"> <i class="bi bi-info-circle-fill"></i>  </span> &nbsp;  Mensagem  </h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h4 class="text-success" id="exampleModalLabel"> Registro excluído com sucesso!
+            </h4>
+
+        </div>
+       
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Botão para acionar modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#excluidoSucesso">
+    Abrir modal de demonstração
+  </button>
+   -->
+  <!-- Modal -->
+
+
+  <div class="modal fade " #modalConfirmaExc id="confirmaExclusao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+      <div class="modal-content bg-dark text-white ">
+        <div class="modal-header bg-dark text-white">
+          <h3 class="modal-title " id="exampleModalLabel">  <span class="text-warning"> <i class="bi bi-exclamation-triangle-fill"></i>  </span> &nbsp;  Confirmação  </h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h4 class="text-warning" id="exampleModalLabel"> Tem certeza que deseja excluir?
+            </h4>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+          <button type="button" class="btn btn-primary" id="botaConfirmaExclusao" (click)="excluir(id.value)" data-dismiss="modal"  data-toggle="modal" data-target="#excluidoSucesso" >Sim</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  

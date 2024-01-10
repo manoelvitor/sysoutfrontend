@@ -1,0 +1,216 @@
+<main id="conteudo" class="bg-light">
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1" style="margin:auto">
+            <h2>Área do cliente</h2>
+        </span>
+    </nav>
+
+
+    <nav class="navbar navbar-expand-lg navbar" style="margin:auto">
+
+        <div class="collapse navbar-collapse" style="width: 80%;margin-top: 20px; margin-left: 230px;; float:left">
+
+            <form class="form-inline my-2 my-lg-0" style="width: 40%;margin: auto;display: inline-block;">
+                <input class="form-control mr-sm-10" [(ngModel)]="nrOs" name="nome" type="number"
+                    style="width:50%;float:left" placeholder="Número da ordem de serviço" aria-label="Pesquisar">
+
+                <button class="btn btn-success my-6 my-sm-0" style="float:left;margin-left: 5px;" type="submit"
+                    (click)="consultarNrOs()">Pesquisar
+                    <strong><i class="bi bi-search" style="font-size: 15px;"></i></strong> </button>
+
+
+
+
+
+            </form>
+        </div>
+    </nav>
+
+    <span *ngIf="ordemServico.nrOrdemServico != null">
+        <div class="card" style="width: 85%;margin:auto; margin-top: 30px;">
+
+
+  <div style="text-align: right; margin:20px ;"> 
+    <h4 style="float: left;">Consulta {{data}}</h4>
+    <button  class="btn btn-primary" type="button" (click)="printPdf()" style="margin:auto;"> <i class="bi bi-printer-fill"></i> Imprimir</button>
+  </div>
+
+
+            <div class="card-body">
+
+                <table class="table table-hover table-dark" style="width: 100%; margin:auto;">
+                    <tbody>
+                        <thead style="width: 100%;">
+                            <th>
+                                <h3 style="width: 100%;">INFORMAÇÕES BÁSICAS</h3>
+                            </th>
+                        </thead>
+
+                        <tr style="width: 100%;">
+                            <th scope="row">NÚMERO</th>
+                            <td>{{ordemServico.nrOrdemServico}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">STATUS</th>
+                            <td> {{ordemServico.status}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ABERTURA</th>
+                            <td>{{ordemServico.dataEntrada}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">TÉCNICO RESPONSÁVEL</th>
+                            <td> {{ordemServico.tecnicoResponsavel.nome }}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <hr>
+                <table class="table table-hover table-dark" style="width: 100%; margin:auto;">
+                    <tbody>
+                        <thead style="width: 100%;">
+                            <th>
+                                <h3 style="width: 100%;">CLIENTE</h3>
+                            </th>
+                        </thead>
+
+                        <tr>
+                            <th scope="row">CLIENTE</th>
+                            <td>{{ordemServico.cliente.nome}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">TELEFONE</th>
+                            <td>{{ordemServico.cliente.telefone}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">E-MAIL</th>
+                            <td>{{ordemServico.cliente.email}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <hr>
+
+                <table class="table table-hover table-dark" style="width: 100%; margin:auto;">
+                    <tbody>
+                        <thead style="width: 100%;">
+                            <th>
+                                <h3 style="width: 100%;">MÁQUINA</h3>
+                            </th>
+                        </thead>
+
+
+
+                        <tr>
+                            <th scope="row">MARCA</th>
+                            <td>{{ordemServico.marca}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">MODELO</th>
+                            <td>{{ordemServico.modelo}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">NÚMERO DE SÉRIE</th>
+                            <td>{{ordemServico.nrSerie}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CATEGORIA</th>
+                            <td>{{ordemServico.categoria.nome}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ACESSÓRIOS</th>
+                            <td><span *ngFor="let item of ordemServico.acessorios;"> {{item.nome}}, </span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">DEFEITOS RELATADOS</th>
+                            <td> {{ordemServico.dsDefeitoCliente}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">DEFEITOS CONSTATADOS</th>
+                            <td> {{ordemServico.dsDefeitoTecnico}}</td>
+                        </tr>
+                        <!--     <tr>
+                        <th scope="row">ORÇAMENTO APROVADO</th>
+                        <td> <span *ngIf="ordemServico.orcamentoAprovado"> Sim</span> <span
+                                *ngIf="!ordemServico.orcamentoAprovado"> Não</span></td>
+                    </tr> -->
+
+                        <tr>
+                            <th scope="row">OBSERVAÇÃO</th>
+                            <td> {{ordemServico.osbservacao }}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <hr>
+                <table class="table table-hover table-dark" style="width: 100%; margin:auto;">
+                    <tbody>
+                        <thead style="width: 100%;">
+                            <th>
+                                <h3 style="width: 100%;">SERVIÇOS</h3>
+                            </th>
+                        </thead>
+                        <tr *ngFor="let item of ordemServico.servicosEfetuados; index as i;"
+                            [ngClass]="{'table-active': i % 2 == 0, '': i % 2 != 0}">
+                            <th>{{item.nome}}</th>
+                            <td scope="row">{{item.valor | currency:'BRL':'symbol':'1.2-2'}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <table class="table table-hover table-dark" style="width: 100%; margin:auto;">
+                    <tbody>
+                        <thead style="width: 100%;">
+                            <th>
+                                <h3 style="width: 100%;">PRODUTOS</h3>
+                            </th>
+                        </thead>
+
+                        <tr *ngFor="let item of ordemServico.produtos; index as i;"
+                            [ngClass]="{'table-active': i % 2 == 0, '': i % 2 != 0}">
+                            <th>{{item.nome}}</th>
+                            <td scope="row">{{item.valor | currency:'BRL':'symbol':'1.2-2'}} </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <hr>
+                <table class="table table-hover table-dark" style="width: 100%; margin:auto;">
+                    <tbody>
+                        <thead style="width: 100%;">
+                            <th>
+                                <h3 style="width: 100%;">TOTAIS</h3>
+                            </th>
+                        </thead>
+
+                        <tr>
+                            <th>VALOR ORÇAMENTO</th>
+                            <td scope="rownom">{{ordemServico.valorOrcamento | currency:'BRL':'symbol':'1.2-2'}} </td>
+                        </tr>
+                        <tr>
+                            <th>VALOR DESCONTO</th>
+                            <td scope="rownom">{{ordemServico.valorDesconto | currency:'BRL':'symbol':'1.2-2'}} </td>
+                        </tr>
+                        <tr>
+                            <th style="color: gold;">TOTAL GERAL</th>
+                            <th style="color: gold;" scope="rownom">{{ordemServico.valorTotal | currency:'BRL':'symbol':'1.2-2'}} </th>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+        <hr style="margin:50px">
+    </span>
+
+    <span *ngIf="">
+
+        <h3>Ordem de Serviço não existe!</h3>
+    </span>
+
+
+</main>

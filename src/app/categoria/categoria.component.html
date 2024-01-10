@@ -1,0 +1,103 @@
+<app-header></app-header>
+
+<div class="container" style="margin-top:50px; margin-bottom: 100px;width: 100%;">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-20">
+
+            <div class="card bg-light">
+
+                <div class="card-header bg-dark text-white">
+                    <h1>Categorias <i class="bi bi-tools" style="font-size: 40px; text-align: center; float:right"></i>
+
+                    </h1>
+                </div>
+                <div style="float: left; margin-top:20px;margin-left:25px;">
+                    <button class="btn btn-outline-secondary my-6 my-sm-0" style="font-size: 18px; " data-target="#modalEditar"  data-toggle="modal" (click)="editar(categoria,false)" type="button">Adicionar <strong><i class="bi bi-plus-circle-fill" style="font-size: 25px;"></i></strong> </button>
+                </div>
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div>
+                    </div>
+                    <div class="collapse navbar-collapse" style="width: 100%;margin-top: 20px; margin-left: 5px;; float:left" >
+                      
+                      <form class="form-inline my-2 my-lg-0" style="width: 100%;margin-top: 150px;display: inline-block;">
+                        &nbsp;<input class="form-control mr-sm-10" [(ngModel)]="nomeBuscar" name="nome" type="search" style="width: 83%;"placeholder="Pesquisar" aria-label="Pesquisar">
+                        &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-outline-success my-6 my-sm-0" (click)="consultarPorNome(idEmpresaGlobal,nomeBuscar)" type="submit">Pesquisar <strong><i class="bi bi-search" style="font-size: 15px;"></i></strong> </button>
+                      </form>
+                    </div>
+
+                  </nav>
+
+                <div class="card-body" style="margin-right: 50px;width:1150px;">
+                    <table *ngIf="categorias.length != 0" class="table table-dark" style="margin-right: 50px;width:1150px;">
+                        <thead style="font-size: 25px;">
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th style="text-align: center;">Ações</th>
+                        </thead>
+                        <tbody>
+                            <tr  *ngFor="let item of categorias; index as i;"   [ngClass]="{'table-active': i % 2 == 0, '': i % 2 != 0}">
+                                <td> {{ item.id }}</td>
+                                <td> {{ item.nome }}</td>
+                                <td> {{ item.descricao }}</td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="btn btn-primary" data-target="#modalEditar"  data-toggle="modal" (click)="editar(item, true)"><i
+                                            class="bi bi-pencil-square"  ></i> Editar </button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-danger" (click)="excluir(item.id)"><i class="bi bi-trash-fill"></i>
+                                        Excluir</button>
+                                </td>
+
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="width: 80%;">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header bg-dark text-white">
+        <h3 *ngIf="labelEditar"  class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold" >Edição</h3>
+        <h3 *ngIf="!labelEditar"  class="modal-title" id="exampleModalLabel" style="color: gold; font-weight: bold" >Inserção</h3>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="width: 100%;">
+        <form style="width: 100%;">
+    
+            <div class="form-group">
+                <label for="id" class="col-form-label" style="font-size: 18px;font-weight: bold">ID:</label>
+                <input type="number" #id [(ngModel)] = "categoria.id" name="id" disabled style="background-color: #ccc;" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="nome" class="col-form-label"  style="font-size: 18px;font-weight: bold">NOME:</label>
+                <input type="text" #nome class="form-control" name="nome" [(ngModel)] = "categoria.nome" >
+            </div>
+            <div class="form-group">
+                <label for="descricao" class="col-form-label"  style="font-size: 18px;font-weight: bold">DESCRIÇÃO:</label>
+                <textarea class="form-control" #descricao name="descricao" [(ngModel)] = "categoria.descricao"></textarea>
+            </div>
+          
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="salvar(categoria,labelEditar)">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
