@@ -86,6 +86,7 @@ export class OsGeralComponent {
   setHdFalse() {
     this.ordemServico.infoTec.hardDisk = false
   }
+  
   setHdTrue() {
     this.ordemServico.infoTec.hardDisk = true
   }

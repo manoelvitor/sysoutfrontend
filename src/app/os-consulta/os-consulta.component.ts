@@ -39,17 +39,24 @@ export class OsConsultaComponent {
 
 
   consultarOs(idTecnico: any): void {
-    this.osConsultaOsService.consultarOsPorIdTecnico(idTecnico).subscribe(
-      (response) => {
-        if (response) {
-          this.ordensServico = response
+    if (localStorage.getItem("token") != null) {
+      this.osConsultaOsService.consultarOsPorIdTecnico(idTecnico).subscribe(
+        (response) => {
+          if (response) {
+            this.ordensServico = response
+          }
         }
-      }
-      ,
-      (error) => {
-        console.log(error);
-      }
-    );
+        ,
+        (error) => {
+          console.log(error);
+          this.router.navigate(['/'])
+        }
+      );
+    }
+    else {
+      this.router.navigate(['/'])
+
+    }
   }
   osEncontrada: OrdemServico[] = [];
   buscaOs(opcao: any) {
@@ -118,7 +125,7 @@ export class OsConsultaComponent {
     this.router.navigate(['/os-geral'], { queryParams: { id: JSON.stringify(id) }, queryParamsHandling: null })
   }
 
-  statusOs:any = "";
+  statusOs: any = "";
 
   consultarCategorias(): void {
     this.osService.consultarCategoria(this.idEmpresaGlobal).subscribe(

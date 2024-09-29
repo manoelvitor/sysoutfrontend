@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
          
 
           this.authService.mostrarMenuEmitter.emit(true);
-          this.router.navigate(['/parametrizacao'])
+          this.router.navigate(['/os'])
         }
       },
       (error) => {

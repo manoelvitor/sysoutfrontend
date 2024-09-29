@@ -23,19 +23,19 @@ export class EmpresaComponent {
     private cadastroAdm: CadastroAdmService,
     private cadastroEmpresa: EmpresaService,
     private router: Router,
-   
-    ) {}
 
-    @ViewChild('nomeFantasia', { static: false }) nomeFantasia: ElementRef | undefined ;
+  ) { }
+
+  @ViewChild('nomeFantasia', { static: false }) nomeFantasia: ElementRef | undefined;
 
 
-    ngAfterViewInit() {
-      if (this.nomeFantasia) {
-        this.nomeFantasia.nativeElement.focus();
-        this.nomeFantasia.nativeElement.required;
-      }
+  ngAfterViewInit() {
+    if (this.nomeFantasia) {
+      this.nomeFantasia.nativeElement.focus();
+      this.nomeFantasia.nativeElement.required;
     }
-  
+  }
+
   ngOnInit() {
     this.activateRoute.queryParams.subscribe(params => {
       this.usuarioCadastrado = JSON.parse(params['usuarioTelaAnterior']);
@@ -43,18 +43,38 @@ export class EmpresaComponent {
     });
   }
 
+  img: FormData = new FormData;
+  uploadLogo() {
+
+    this.cadastroEmpresa.uploadLogo(this.img).subscribe(
+      (response) => {
+        if (response) {
+
+          console.log(response)    
+        }
+
+      }
+      ,
+      (error) => {
+        console.log(error);
+      }
+
+    )
+
+  }
+
   onSubmit(): void {
-    if(this.camposPreenchidos()){
+    if (this.camposPreenchidos()) {
       this.cadastroEmpresa.cadastrarEmpresa(this.empresa).subscribe(
         (response) => {
           if (response) {
             console.log(response.id);
             this.empresa = response;
             console.log("empresa");
-            console.log( this.empresa);
+            console.log(this.empresa);
             this.atualizaIdEmpresa();
-            this.cadastroAdm.atribuiEmpresa(this.usuarioCadastrado, this.empresa.id ).subscribe(
-      
+            this.cadastroAdm.atribuiEmpresa(this.usuarioCadastrado, this.empresa.id).subscribe(
+
               (response) => {
                 if (response) {
                   alert('Cadastro feito com sucesso!')
@@ -66,6 +86,7 @@ export class EmpresaComponent {
             );
 
           }
+          this.uploadLogo()
           alert('Cadastro feito com sucesso!')
           this.router.navigate(['/']);
         },
@@ -74,35 +95,35 @@ export class EmpresaComponent {
         }
       );
       this.usuarioCadastrado.idEmpresa = this.empresa.id;
-  
+
 
     };
   }
 
 
 
-  atualizaIdEmpresa(): void{
+  atualizaIdEmpresa(): void {
 
- 
+
   }
-  myValue : any;
-  camposPreenchidos() :boolean {
-    if( this.empresa.nomeFantasia == ''){
+  myValue: any;
+  camposPreenchidos(): boolean {
+    if (this.empresa.nomeFantasia == '') {
       alert('Campo nome fantasia obrigátorio')
       return false;
     }
-    if( this.empresa.razaoSocial == ''){
+    if (this.empresa.razaoSocial == '') {
       alert('Campo razão social obrigátorio')
       return false;
     }
-    if( this.empresa.cnpj == ''){
+    if (this.empresa.cnpj == '') {
       alert('Campo cnpj obrigátorio')
       return false;
     }
-  
+
     return true;
 
-  } 
+  }
 
 
 

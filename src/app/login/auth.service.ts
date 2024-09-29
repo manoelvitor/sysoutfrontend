@@ -1,14 +1,15 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://sysoutbackend.herokuapp.com';
-/*   private apiUrl = 'http://localhost:8080';
- */
+/*   private apiUrl = 'https://sysoutbackend.herokuapp.com';
+ */  private apiUrl = environment.apiUrl;
+
   mostrarMenuEmitter = new EventEmitter<boolean>();
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -21,15 +22,15 @@ export class AuthService {
   logout() {
     localStorage.clear();
     this.router.navigate(['/'])
-    return this.http.post(`${this.apiUrl}/logout`,{});
+    return this.http.post(`${this.apiUrl}/logout`, {});
   }
 
   getIsAdmin() {
     return localStorage.getItem('administrador');
   }
 
-  setIsAdmin(administrador:string) {
-    return localStorage.setItem('administrador',administrador);
+  setIsAdmin(administrador: string) {
+    return localStorage.setItem('administrador', administrador);
   }
 
   getToken() {

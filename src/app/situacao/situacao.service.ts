@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Situacao } from '../os/situacao-model';
 import { AuthService } from '../login/auth.service';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class SituacaoService {
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  private apiUrl = 'https://sysoutbackend.herokuapp.com';
+  private apiUrl = environment.apiUrl;
   
   consultar(idEmpresa: any) {
     return this.http.get<Situacao[]>(`${this.apiUrl}/situacoes/empresa/${idEmpresa}`);

@@ -6,6 +6,7 @@ import { Situacao } from '../os/situacao-model';
 import { Historico } from '../os/historico-model';
 import { Tecnico } from '../tecnico-consulta/tecnico-model';
 import { Empresa } from '../model/empresa';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,8 @@ import { Empresa } from '../model/empresa';
 export class OsDetalhesService {
   headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
 
-  private apiUrl = 'https://sysoutbackend.herokuapp.com';
-/*    private apiUrl = 'http://localhost:8080';
- */ 
+  private apiUrl = environment.apiUrl;
+ 
 
   constructor(private http: HttpClient) { }
 

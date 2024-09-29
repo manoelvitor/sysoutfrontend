@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from '../login/auth.service';
 import { Acessorio } from '../os/acessorio-model';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Acessorio } from '../os/acessorio-model';
 export class AcessorioService {
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  private apiUrl = 'https://sysoutbackend.herokuapp.com';
+  private apiUrl = environment.apiUrl;;
   
   consultar(idEmpresa: any) {
     return this.http.get<Acessorio[]>(`${this.apiUrl}/acessorios/empresa/${idEmpresa}`);

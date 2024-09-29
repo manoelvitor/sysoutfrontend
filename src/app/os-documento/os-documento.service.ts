@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Empresa } from '../model/empresa';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Tecnico } from '../tecnico-consulta/tecnico-model';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OsDocumentoService {
 
-  private apiUrl = 'https://sysoutbackend.herokuapp.com';
+  private apiUrl = environment.apiUrl;
   headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
 
   constructor(private http:HttpClient) { }

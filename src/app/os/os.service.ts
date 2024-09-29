@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Categoria } from './categoria-model';
 import { Acessorio } from './acessorio-model';
 import { OrdemServico } from './os-model';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,9 @@ export class OsService {
 
   constructor(private http: HttpClient) {}
   
-  private apiUrl = 'https://sysoutbackend.herokuapp.com';
-  
-/*   private apiUrl = 'http://localhost:8080';
- */
+
+  private apiUrl = environment.apiUrl;
+
 
   consultarCategoria(idEmpresa: any) {
     return this.http.get<Categoria[]>(`${this.apiUrl}/categorias/empresa/${idEmpresa}`);

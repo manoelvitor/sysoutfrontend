@@ -4,6 +4,13 @@
     cursor: pointer !important;
 }
 
+td{
+    width: 500px !important;
+}
+
+tbody{
+    width: 500px !important;
+}
 
 label{
 

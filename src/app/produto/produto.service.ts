@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Produto } from './produto';
 import { AuthService } from '../login/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,10 @@ export class ProdutoService {
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  private apiUrl = 'https://sysoutbackend.herokuapp.com';
-  private headers = new HttpHeaders().set('Authorization', `Bearer ${this.auth.getToken()}`);
+/*   private apiUrl = 'https://sysoutbackend.herokuapp.com';
+ */   private apiUrl = environment.apiUrl;
+
+private headers = new HttpHeaders().set('Authorization', `Bearer ${this.auth.getToken()}`);
   
   consultarProdutos(idEmpresa: any) {
     return this.http.get<Produto[]>(`${this.apiUrl}/produtos/empresa/${idEmpresa}`);

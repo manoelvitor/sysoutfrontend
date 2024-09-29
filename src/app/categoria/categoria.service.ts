@@ -11,7 +11,7 @@ export class CategoriaService {
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  private apiUrl = 'https://sysoutbackend.herokuapp.com';
+  private apiUrl = 'http://localhost:8080';
   
   consultar(idEmpresa: any) {
     return this.http.get<Categoria[]>(`${this.apiUrl}/categorias/empresa/${idEmpresa}`);

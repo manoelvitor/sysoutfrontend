@@ -10,15 +10,15 @@
     <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
       <ul class="navbar-nav mr-auto" style="margin: auto;">
         <li class="nav-item active">
-          <a class="nav-link bg-dark text-white" [routerLink]="['/os']"><i
+          <a class="nav-link text-white" [routerLink]="['/os']"><i
               class="bi bi-file-earmark-medical-fill"></i> Ordem de Serviço</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link bg-dark text-white" [routerLink]="['/cliente-consultar']"><i
+          <a class="nav-link  text-white" [routerLink]="['/cliente-consultar']"><i
               class="bi bi-people-fill"></i> Clientes</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link bg-dark text-white" [routerLink]="['/tecnico-consultar']"><i
+          <a class="nav-link  text-white" [routerLink]="['/tecnico-consultar']"><i
               class="bi bi-person-badge"></i>
             Técnicos</a>
           </li>
@@ -66,9 +66,9 @@
  
       </ul>
       
-    <h4 style="display:inline;color:white"><!-- {{this.empresa.nomeFantasia}} - {{this.nome}} -->
+    <h4 style="display:inline;"><!-- {{this.empresa.nomeFantasia}} - {{this.nome}} -->
 
-      <a class="dropdown-item bg-dark text-white" href="#" (click)="logout()"><i class="bi bi-power"></i> Sair</a>
+      <a  href="#" (click)="logout()" id="logout"><i class="bi bi-power"></i> Sair</a>
 
 
     </h4>

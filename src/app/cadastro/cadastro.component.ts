@@ -71,5 +71,11 @@ export class CadastroComponent implements OnInit {
 
 }
 
+  uploadLogo(){
+    
+  }
+
+
+
 
 }
